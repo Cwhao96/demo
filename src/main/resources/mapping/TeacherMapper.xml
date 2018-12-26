@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.TeacherMapper" >
+    <resultMap id="BaseResultMap" type="com.example.demo.model.Teacher" >
+        <id column="teacherId" property="teacherId" jdbcType="INTEGER" />
+        <result column="teacherName" property="teacherName" jdbcType="VARCHAR" />
+        <result column="teacherSex" property="teacherSex" jdbcType="VARCHAR" />
+        <result column="teacherTel" property="teacherTel" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        teacherId, teacherName, teacherSex,teacherTel
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from t_teacher
+        where teacherId = #{teacherId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_teacher
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from t_teacher
+        where teacherId = #{teacherId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.example.demo.model.Teacher" >
+        insert into t_teacher (teacherId, teacherName, teacherSex,teacherTel)
+        values (#{teacherId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{teacherSex,jdbcType=VARCHAR},
+                #{teacherTel,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.example.demo.model.Teacher" >
+        insert into t_teacher
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="teacherId != null" >
+                teacherId,
+            </if>
+            <if test="teacherName != null" >
+                teacherName,
+            </if>
+            <if test="teacherSex != null" >
+                teacherSex,
+            </if>
+            <if test="teacherTel != null" >
+                teacherTel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="teacherId != null" >
+                #{teacherId,jdbcType=INTEGER},
+            </if>
+            <if test="teacherName != null" >
+                #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null" >
+                #{teacherSex,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherTel != null" >
+                #{teacherTel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Teacher" >
+        update t_teacher
+        <set >
+            <if test="teacherName != null" >
+                teacherName = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null" >
+                teacherSex = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherTel != null" >
+                teacherTel = #{phone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where teacherId = #{teacherId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.demo.model.User" >
+        update t_teacher
+        set teacherName = #{teacherName,jdbcType=VARCHAR},
+            teacherSex = #{teacherSex,jdbcType=VARCHAR},
+            teacherTel = #{teacherTel,jdbcType=VARCHAR}
+        where teacherId = #{teacherId,jdbcType=INTEGER}
+    </update>
+</mapper>
